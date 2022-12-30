@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">MarvelCharacters</string>
+    <string name="app_name">Marvel Characters</string>
+    <string name="retry_string">Retry</string>
+    <string name="server_error">Server error</string>
+    <string name="transform_error">Server error</string>
+    <string name="network_error">Connection error</string>
+    <string name="home_character_id_string">Id:</string>
+    <string name="home_toolbar_marvel_characters_string">Marvel Characters</string>
+    <string name="character_id_string">Id</string>
+    <string name="character_info_string">Info</string>
+    <string name="character_details_string">Details</string>
+    <string name="character_description_string">Description</string>
+    <string name="character_comics_string">Comics</string>
+    <string name="character_series_string">Series</string>
+    <string name="character_stories_string">Stories</string>
+    <string name="character_events_string">Events</string>
+    <string name="character_no_data_found_string">- No data found -</string>
 </resources>

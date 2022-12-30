@@ -1,0 +1,11 @@
+package com.example.marvelcharacters.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.List;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class CharacterDataContainer {
+    public int count;
+    public List<Character> results;
+}

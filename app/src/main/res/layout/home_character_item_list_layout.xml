@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:background="@drawable/home_character_item_lis_background_drawable">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/character_profile_image_view"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_alignParentStart="true"
+            fresco:backgroundImage="@color/loaded_image_background_color"
+            fresco:placeholderImage="@drawable/default_user_avatar"
+            fresco:roundAsCircle="true"
+            fresco:roundedCornerRadius="4dp" />
+
+        <TextView
+            android:id="@+id/character_name_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/character_profile_image_view"
+            android:layout_alignTop="@+id/character_profile_image_view"
+            android:layout_marginEnd="10dp"
+            android:ellipsize="end"
+            android:lines="1"
+            tools:text="Iron Man"
+            android:textColor="@color/darkTextColor"
+            android:textSize="16dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/character_id_hint_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/character_profile_image_view"
+            android:layout_below="@+id/character_name_text_view"
+            android:layout_marginEnd="4dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="@string/home_character_id_string"
+            android:textColor="@color/id_text_color"
+            android:textSize="14dp"/>
+
+        <TextView
+            android:id="@+id/character_id_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/character_id_hint_text_view"
+            android:layout_below="@+id/character_name_text_view"
+            android:layout_marginEnd="10dp"
+            android:ellipsize="end"
+            android:lines="1"
+            tools:text="900584"
+            android:textColor="@color/id_text_color"
+            android:textSize="14dp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

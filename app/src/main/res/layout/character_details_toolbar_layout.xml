@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/toolbarStyle">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:background="@color/app_primary_color">
+
+        <ImageView
+            android:id="@+id/back_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="4dp"
+            android:src="@drawable/back_white_toolbar_icon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/back_image_view"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:text="@string/character_info_string"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="22dp"/>
+
+    </RelativeLayout>
+
+
+</com.google.android.material.appbar.AppBarLayout>

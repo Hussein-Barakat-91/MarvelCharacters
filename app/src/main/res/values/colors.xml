@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="app_primary_color">#B13D4C</color>
+    <color name="error_button_color">#B13D4C</color>
+    <color name="loaded_image_background_color">#301b79bc</color>
+    <color name="item_stroke_color">#CFCFCF</color>
+    <color name="darkTextColor">#002938</color>
+    <color name="id_text_color">#707070</color>
+    <color name="separator_background_color">#EFC0C6</color>
 </resources>
