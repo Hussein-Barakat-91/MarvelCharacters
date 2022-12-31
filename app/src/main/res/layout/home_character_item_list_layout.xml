@@ -10,6 +10,9 @@
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/home_character_item_lis_background_drawable">
 
         <com.facebook.drawee.view.SimpleDraweeView

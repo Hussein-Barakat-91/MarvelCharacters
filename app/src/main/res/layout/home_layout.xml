@@ -8,13 +8,7 @@
 
     <include layout="@layout/home_toolbar_layout"/>
 
-    <ListView
-        android:id="@+id/characters_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerHeight="10dp"
-        android:layout_margin="10dp"
-        android:divider="@null"/>
+    <include layout="@layout/list_layout"/>
 
     <RelativeLayout
         android:id="@+id/error_relative_layout_container"

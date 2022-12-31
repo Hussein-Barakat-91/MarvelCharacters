@@ -124,7 +124,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         switch (parent.getId()) {
             case R.id.characters_list_view:
                 Character character = charactersListAdapter.getItem(position);
-                launchCharacterDetailsActivity(character.id);
+                boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+                if(isTablet) {
+                    Bundle arguments = new Bundle();
+                    arguments.putInt(DetailsFragment.CHARACTER_ID, character.id);
+                    DetailsFragment fragment = new DetailsFragment();
+                    fragment.setArguments(arguments);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.detail_container, fragment)
+                            .commit();
+                } else {
+                    launchCharacterDetailsActivity(character.id);
+                }
                 break;
         }
     }

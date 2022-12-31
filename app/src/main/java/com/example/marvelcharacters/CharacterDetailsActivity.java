@@ -50,7 +50,6 @@ public class CharacterDetailsActivity extends AppCompatActivity implements View.
     private RelativeLayout errorRelativeContainer;
     private TextView errorTextView;
     private Button retryButton;
-    private ScrollView characterScrollView;
     private int characterId;
 
     @Override
@@ -63,8 +62,20 @@ public class CharacterDetailsActivity extends AppCompatActivity implements View.
         if (intentOptions.hasExtra(CONSTANTS.CHARACTER_ID_KEY)) {
             characterId = intentOptions.getIntExtra(CONSTANTS.CHARACTER_ID_KEY, -1);
         }
-        initializeViews();
-        getMarvelCharacterDetails(characterId);
+        if (savedInstanceState == null) {
+            // Create the detail fragment and add it to the activity
+            // using a fragment transaction.
+            Bundle arguments = new Bundle();
+            arguments.putInt(DetailsFragment.CHARACTER_ID, getIntent().getIntExtra(DetailsFragment.CHARACTER_ID, 0));
+            DetailsFragment fragment = new DetailsFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.detail_container, fragment)
+                    .commit();
+        } else {
+            initializeViews();
+            getMarvelCharacterDetails(characterId);
+        }
     }
 
     private void initializeViews() {
@@ -84,7 +95,6 @@ public class CharacterDetailsActivity extends AppCompatActivity implements View.
         eventsImageView = findViewById(R.id.character_events_expand_image_view);
         storiesImageView = findViewById(R.id.character_stories_expand_image_view);
         seriesImageView = findViewById(R.id.character_series_expand_image_view);
-        characterScrollView = findViewById(R.id.character_scroll_view);
         errorRelativeContainer = findViewById(R.id.error_relative_layout_container);
         errorTextView = findViewById(R.id.error_failure_text_view);
         retryButton = findViewById(R.id.error_failure_retry_button);
@@ -105,7 +115,6 @@ public class CharacterDetailsActivity extends AppCompatActivity implements View.
 
     public void onGetMarvelCharacterDetailsSucceed(GetAllMarvelCharactersResponse getAllMarvelCharactersResponse) {
         if (getAllMarvelCharactersResponse.data != null) {
-            characterScrollView.setVisibility(View.VISIBLE);
             Character characterItem = getAllMarvelCharactersResponse.data.results.get(0);
             Uri uri = Uri.parse(characterItem.thumbnail.path + "." + characterItem.thumbnail.extension);
             characterProfileImage.setImageURI(uri);
@@ -122,7 +131,6 @@ public class CharacterDetailsActivity extends AppCompatActivity implements View.
     }
 
     public void onGetMarvelCharacterDetailsFailed(String errorText) {
-        characterScrollView.setVisibility(View.GONE);
         errorRelativeContainer.setVisibility(View.VISIBLE);
         errorTextView.setText(errorText);
         hideLoader();
