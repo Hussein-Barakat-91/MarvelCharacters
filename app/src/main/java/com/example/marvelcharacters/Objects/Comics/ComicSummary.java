@@ -1,4 +1,4 @@
-package com.example.marvelcharacters.Objects;
+package com.example.marvelcharacters.Objects.Comics;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

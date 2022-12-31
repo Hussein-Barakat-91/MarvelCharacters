@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,8 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.marvelcharacters.Adapters.HomeCharactersListAdapter;
 import com.example.marvelcharacters.AppUtils.CONSTANTS;
-import com.example.marvelcharacters.Objects.Character;
-import com.example.marvelcharacters.Objects.CharacterDataContainer;
+import com.example.marvelcharacters.Objects.CharacterInfo.Character;
 import com.example.marvelcharacters.Responses.GetAllMarvelCharactersResponse;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipeline;
@@ -30,6 +30,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout errorRelativeContainer;
     private TextView errorTextView;
     private Button retryButton;
+    private LinearLayout copyrightContainer;
+    private TextView copyrightTextView;
+    private LinearLayout characterListContainer;
     private HomeCharactersListAdapter charactersListAdapter;
 
     @Override
@@ -46,6 +49,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         charactersListView = findViewById(R.id.characters_list_view);
         errorRelativeContainer = findViewById(R.id.error_relative_layout_container);
         errorTextView = findViewById(R.id.error_failure_text_view);
+        copyrightContainer = findViewById(R.id.marvel_copyright_container);
+        copyrightTextView = findViewById(R.id.marvel_copyright_text_view);
+        characterListContainer = findViewById(R.id.character_list_container);
         retryButton = findViewById(R.id.error_failure_retry_button);
         retryButton.setOnClickListener(this);
     }
@@ -57,18 +63,23 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onGetAllMarvelCharactersSucceed(GetAllMarvelCharactersResponse getAllMarvelCharactersResponse) {
         if (getAllMarvelCharactersResponse.data != null) {
+            copyrightContainer.setVisibility(View.VISIBLE);
             charactersListView.setVisibility(View.VISIBLE);
+            characterListContainer.setVisibility(View.VISIBLE);
             errorRelativeContainer.setVisibility(View.GONE);
             charactersListAdapter = new HomeCharactersListAdapter(this, R.layout.home_character_item_list_layout);
             charactersListAdapter.addAll(getAllMarvelCharactersResponse.data.results);
             charactersListView.setAdapter(charactersListAdapter);
             charactersListView.setOnItemClickListener(this);
+            copyrightTextView.setText(getAllMarvelCharactersResponse.attributionText);
         }
         hideLoader();
     }
 
     public void onGetAllMarvelCharactersFailed(String errorText) {
+        copyrightContainer.setVisibility(View.GONE);
         charactersListView.setVisibility(View.GONE);
+        characterListContainer.setVisibility(View.GONE);
         errorRelativeContainer.setVisibility(View.VISIBLE);
         errorTextView.setText(errorText);
         hideLoader();
@@ -127,8 +138,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 boolean isTablet = getResources().getBoolean(R.bool.isTablet);
                 if(isTablet) {
                     Bundle arguments = new Bundle();
-                    arguments.putInt(DetailsFragment.CHARACTER_ID, character.id);
-                    DetailsFragment fragment = new DetailsFragment();
+                    arguments.putInt(CONSTANTS.CHARACTER_ID_KEY, character.id);
+                    DetailsFragment fragment = new DetailsFragment(this);
                     fragment.setArguments(arguments);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.detail_container, fragment)

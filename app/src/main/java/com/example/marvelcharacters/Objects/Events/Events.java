@@ -1,13 +1,13 @@
-package com.example.marvelcharacters.Objects;
+package com.example.marvelcharacters.Objects.Events;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Series {
+public class Events {
     public int available;
     public int returned;
     public String collectionURI;
-    public List<SeriesSummary> items;
+    public List<EventSummary> items;
 }

@@ -1,10 +1,9 @@
-package com.example.marvelcharacters.Objects;
+package com.example.marvelcharacters.Objects.Events;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StorySummary {
+public class EventSummary {
     public String resourceURI;
     public String name;
-    public String type;
 }

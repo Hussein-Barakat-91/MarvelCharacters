@@ -12,6 +12,7 @@ import com.example.marvelcharacters.AppUtils.CONSTANTS;
 import com.example.marvelcharacters.AppUtils.CustomMapper;
 import com.example.marvelcharacters.AppUtils.CustomWebService;
 import com.example.marvelcharacters.Responses.GetAllMarvelCharactersResponse;
+import com.example.marvelcharacters.Responses.GetMarvelCharacterComicsResponse;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 import org.json.JSONObject;
@@ -25,10 +26,14 @@ public class MainActivity extends MultiDexApplication {
     private CustomMapper customMapper;
     private HomeActivity homeActivity;
     private CharacterDetailsActivity characterDetailsActivity;
+    private DetailsFragment detailsFragment;
 
     private CustomWebService getAllMarvelCharactersService;
     private CustomWebService getMarvelCharacterDetailsService;
     private CustomWebService getMarvelCharacterComicsService;
+    private CustomWebService getMarvelCharacterEventsService;
+    private CustomWebService getMarvelCharacterStoriesService;
+    private CustomWebService getMarvelCharacterSeriesService;
 
     @Override
     public void onCreate() {
@@ -44,6 +49,9 @@ public class MainActivity extends MultiDexApplication {
         getAllMarvelCharactersService = new CustomWebService(this, CONSTANTS.SERVICE_TYPE.getAllMarvelCharacters, CONSTANTS.SHORT_WEBSERVICE_TIMEOUT);
         getMarvelCharacterDetailsService = new CustomWebService(this, CONSTANTS.SERVICE_TYPE.getMarvelCharacterDetails, CONSTANTS.SHORT_WEBSERVICE_TIMEOUT);
         getMarvelCharacterComicsService = new CustomWebService(this, CONSTANTS.SERVICE_TYPE.getMarvelCharacterComics, CONSTANTS.SHORT_WEBSERVICE_TIMEOUT);
+        getMarvelCharacterEventsService = new CustomWebService(this, CONSTANTS.SERVICE_TYPE.getMarvelCharacterEvents, CONSTANTS.SHORT_WEBSERVICE_TIMEOUT);
+        getMarvelCharacterStoriesService = new CustomWebService(this, CONSTANTS.SERVICE_TYPE.getMarvelCharacterStories, CONSTANTS.SHORT_WEBSERVICE_TIMEOUT);
+        getMarvelCharacterSeriesService = new CustomWebService(this, CONSTANTS.SERVICE_TYPE.getMarvelCharacterSeries, CONSTANTS.SHORT_WEBSERVICE_TIMEOUT);
     }
 
     public void onCustomServiceResponse(AjaxStatus status, JSONObject object, CONSTANTS.SERVICE_TYPE service_type) {
@@ -59,6 +67,15 @@ public class MainActivity extends MultiDexApplication {
                     break;
                 case getMarvelCharacterComics:
                     onGetMarvelCharacterComicsResponse(status, object);
+                    break;
+                case getMarvelCharacterEvents:
+                    onGetMarvelCharacterEventsResponse(status, object);
+                    break;
+                case getMarvelCharacterStories:
+                    onGetMarvelCharacterStoriesResponse(status, object);
+                    break;
+                case getMarvelCharacterSeries:
+                    onGetMarvelCharacterSeriesResponse(status, object);
                     break;
             }
         }
@@ -112,6 +129,14 @@ public class MainActivity extends MultiDexApplication {
 
     public void setCharacterDetailsActivity(CharacterDetailsActivity characterDetailsActivity) {
         this.characterDetailsActivity = characterDetailsActivity;
+    }
+
+    public DetailsFragment getDetailsFragment() {
+        return detailsFragment;
+    }
+
+    public void setDetailsFragment(DetailsFragment detailsFragment) {
+        this.detailsFragment = detailsFragment;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -214,18 +239,18 @@ public class MainActivity extends MultiDexApplication {
     }
 
     public void onGetMarvelCharacterDetailsSuccess(JSONObject object, AjaxStatus ajaxStatus) {
-        if (characterDetailsActivity != null) {
+        if (detailsFragment != null) {
             if (object != null) {
                 GetAllMarvelCharactersResponse getAllMarvelCharactersResponse = customMapper.mapGetAllMarvelCharactersResponse(object);
-                characterDetailsActivity.onGetMarvelCharacterDetailsSucceed(getAllMarvelCharactersResponse);
+                detailsFragment.onGetMarvelCharacterDetailsSucceed(getAllMarvelCharactersResponse);
             } else {
-                characterDetailsActivity.onGetMarvelCharacterDetailsFailed(getErrorByCode(ajaxStatus));
+                detailsFragment.onGetMarvelCharacterDetailsFailed(getErrorByCode(ajaxStatus));
             }
         }
     }
     public void onGetMarvelCharacterDetailsFailure(AjaxStatus ajaxStatus) {
-        if (characterDetailsActivity != null) {
-            characterDetailsActivity.onGetMarvelCharacterDetailsFailed(getErrorByCode(ajaxStatus));
+        if (detailsFragment != null) {
+            detailsFragment.onGetMarvelCharacterDetailsFailed(getErrorByCode(ajaxStatus));
         }
     }
 
@@ -252,18 +277,132 @@ public class MainActivity extends MultiDexApplication {
     }
 
     public void onGetMarvelCharacterComicsSuccess(JSONObject object, AjaxStatus ajaxStatus) {
-        if (characterDetailsActivity != null) {
-            /*if (object != null) {
-                GetAllMarvelCharactersResponse getAllMarvelCharactersResponse = customMapper.mapGetAllMarvelCharactersResponse(object);
-                characterDetailsActivity.onGetMarvelCharacterDetailsSucceed(getAllMarvelCharactersResponse);
+        if (detailsFragment != null) {
+            if (object != null) {
+                GetMarvelCharacterComicsResponse getMarvelCharacterComicsResponse = customMapper.mapGetMarvelCharacterComicsResponse(object);
+                detailsFragment.onGetMarvelCharacterComicsSucceed(getMarvelCharacterComicsResponse);
             } else {
-                characterDetailsActivity.onGetMarvelCharacterDetailsFailed(getErrorByCode(ajaxStatus));
-            }*/
+                detailsFragment.onGetMarvelCharacterComicsFailed(getErrorByCode(ajaxStatus));
+            }
         }
     }
     public void onGetMarvelCharacterComicsFailure(AjaxStatus ajaxStatus) {
-        if (characterDetailsActivity != null) {
-            //characterDetailsActivity.onGetMarvelCharacterDetailsFailed(getErrorByCode(ajaxStatus));
+        if (detailsFragment != null) {
+            detailsFragment.onGetMarvelCharacterComicsFailed(getErrorByCode(ajaxStatus));
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // get marvel character events service
+    public void getMarvelCharacterEvents(int id) {
+        getMarvelCharacterEventsService.get(CONSTANTS.MAIN_ADDRESS + "/" + id + "/events" + grabAuthentication());
+    }
+
+    public void onGetMarvelCharacterEventsResponse(AjaxStatus ajaxStatus, JSONObject object) {
+        switch (ajaxStatus.getCode()) {
+            case AjaxStatus.AUTH_ERROR:
+            case AjaxStatus.TRANSFORM_ERROR:
+            case 400:
+            case AjaxStatus.NETWORK_ERROR:
+                onGetMarvelCharacterEventsFailure(ajaxStatus);
+                return;
+        }
+        if (object != null) {
+            onGetMarvelCharacterEventsSuccess(object, ajaxStatus);
+        } else {
+            onGetMarvelCharacterEventsFailure(ajaxStatus);
+        }
+    }
+
+    public void onGetMarvelCharacterEventsSuccess(JSONObject object, AjaxStatus ajaxStatus) {
+        if (detailsFragment != null) {
+            if (object != null) {
+                GetMarvelCharacterComicsResponse getMarvelCharacterComicsResponse = customMapper.mapGetMarvelCharacterComicsResponse(object);
+                detailsFragment.onGetMarvelCharacterEventsSucceed(getMarvelCharacterComicsResponse);
+            } else {
+                detailsFragment.onGetMarvelCharacterEventsFailed(getErrorByCode(ajaxStatus));
+            }
+        }
+    }
+    public void onGetMarvelCharacterEventsFailure(AjaxStatus ajaxStatus) {
+        if (detailsFragment != null) {
+            detailsFragment.onGetMarvelCharacterEventsFailed(getErrorByCode(ajaxStatus));
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // get marvel character stories service
+    public void getMarvelCharacterStories(int id) {
+        getMarvelCharacterStoriesService.get(CONSTANTS.MAIN_ADDRESS + "/" + id + "/stories" + grabAuthentication());
+    }
+
+    public void onGetMarvelCharacterStoriesResponse(AjaxStatus ajaxStatus, JSONObject object) {
+        switch (ajaxStatus.getCode()) {
+            case AjaxStatus.AUTH_ERROR:
+            case AjaxStatus.TRANSFORM_ERROR:
+            case 400:
+            case AjaxStatus.NETWORK_ERROR:
+                onGetMarvelCharacterStoriesFailure(ajaxStatus);
+                return;
+        }
+        if (object != null) {
+            onGetMarvelCharacterStoriesSuccess(object, ajaxStatus);
+        } else {
+            onGetMarvelCharacterStoriesFailure(ajaxStatus);
+        }
+    }
+
+    public void onGetMarvelCharacterStoriesSuccess(JSONObject object, AjaxStatus ajaxStatus) {
+        if (detailsFragment != null) {
+            if (object != null) {
+                GetMarvelCharacterComicsResponse getMarvelCharacterComicsResponse = customMapper.mapGetMarvelCharacterComicsResponse(object);
+                detailsFragment.onGetMarvelCharacterStoriesSucceed(getMarvelCharacterComicsResponse);
+            } else {
+                detailsFragment.onGetMarvelCharacterStoriesFailed(getErrorByCode(ajaxStatus));
+            }
+        }
+    }
+    public void onGetMarvelCharacterStoriesFailure(AjaxStatus ajaxStatus) {
+        if (detailsFragment != null) {
+            detailsFragment.onGetMarvelCharacterStoriesFailed(getErrorByCode(ajaxStatus));
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // get marvel character series service
+    public void getMarvelCharacterSeries(int id) {
+        getMarvelCharacterSeriesService.get(CONSTANTS.MAIN_ADDRESS + "/" + id + "/series" + grabAuthentication());
+    }
+
+    public void onGetMarvelCharacterSeriesResponse(AjaxStatus ajaxStatus, JSONObject object) {
+        switch (ajaxStatus.getCode()) {
+            case AjaxStatus.AUTH_ERROR:
+            case AjaxStatus.TRANSFORM_ERROR:
+            case 400:
+            case AjaxStatus.NETWORK_ERROR:
+                onGetMarvelCharacterSeriesFailure(ajaxStatus);
+                return;
+        }
+        if (object != null) {
+            onGetMarvelCharacterSeriesSuccess(object, ajaxStatus);
+        } else {
+            onGetMarvelCharacterSeriesFailure(ajaxStatus);
+        }
+    }
+
+    public void onGetMarvelCharacterSeriesSuccess(JSONObject object, AjaxStatus ajaxStatus) {
+        if (detailsFragment != null) {
+            if (object != null) {
+                GetMarvelCharacterComicsResponse getMarvelCharacterComicsResponse = customMapper.mapGetMarvelCharacterComicsResponse(object);
+                detailsFragment.onGetMarvelCharacterSeriesSucceed(getMarvelCharacterComicsResponse);
+            } else {
+                detailsFragment.onGetMarvelCharacterSeriesFailed(getErrorByCode(ajaxStatus));
+            }
+        }
+    }
+    public void onGetMarvelCharacterSeriesFailure(AjaxStatus ajaxStatus) {
+        if (detailsFragment != null) {
+            detailsFragment.onGetMarvelCharacterSeriesFailed(getErrorByCode(ajaxStatus));
         }
     }
 

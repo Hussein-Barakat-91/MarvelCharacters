@@ -8,6 +8,32 @@
 
     <include layout="@layout/home_toolbar_layout"/>
 
+    <LinearLayout
+        android:id="@+id/marvel_copyright_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:background="@color/copyright_background_color"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/marvel_caution_icon"/>
+
+        <TextView
+            android:id="@+id/marvel_copyright_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="2dp"
+            tools:text="Copyright"
+            android:textSize="14dp"
+            android:textColor="@color/darkTextColor"/>
+
+    </LinearLayout>
+
     <include layout="@layout/list_layout"/>
 
     <RelativeLayout

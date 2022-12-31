@@ -9,6 +9,6 @@ public final class CONSTANTS {
     public static final String CHARACTER_ID_KEY = "CHARACTER_ID_KEY";
 
     public enum SERVICE_TYPE {
-        getAllMarvelCharacters, getMarvelCharacterDetails, getMarvelCharacterComics
+        getAllMarvelCharacters, getMarvelCharacterDetails, getMarvelCharacterComics, getMarvelCharacterEvents, getMarvelCharacterStories, getMarvelCharacterSeries
     }
 }

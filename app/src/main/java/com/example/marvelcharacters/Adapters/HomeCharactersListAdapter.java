@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.marvelcharacters.HomeActivity;
-import com.example.marvelcharacters.Objects.Character;
+import com.example.marvelcharacters.Objects.CharacterInfo.Character;
 import com.example.marvelcharacters.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 

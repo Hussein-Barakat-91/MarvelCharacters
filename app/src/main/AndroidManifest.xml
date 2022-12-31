@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MarvelCharacters"
-        android:name=".MainActivity">
+        android:name=".MainActivity"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
 
         <uses-library
             android:name="org.apache.http.legacy"

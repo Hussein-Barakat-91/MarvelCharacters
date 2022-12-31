@@ -15,4 +15,5 @@
     <color name="darkTextColor">#002938</color>
     <color name="id_text_color">#707070</color>
     <color name="separator_background_color">#EFC0C6</color>
+    <color name="copyright_background_color">#FFCED4</color>
 </resources>

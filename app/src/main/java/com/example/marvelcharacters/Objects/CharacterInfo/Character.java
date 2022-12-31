@@ -1,5 +1,9 @@
-package com.example.marvelcharacters.Objects;
+package com.example.marvelcharacters.Objects.CharacterInfo;
 
+import com.example.marvelcharacters.Objects.Comics.Comics;
+import com.example.marvelcharacters.Objects.Events.Events;
+import com.example.marvelcharacters.Objects.Series.Series;
+import com.example.marvelcharacters.Objects.Stories.Stories;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
